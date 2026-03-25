@@ -1,0 +1,9 @@
+small {
+	background-color: aliceblue;
+	padding: 4px 8px;
+	border-radius: 20px;
+}
+
+.nav li a:hover {
+	color: rgb(29, 29, 193);
+}
