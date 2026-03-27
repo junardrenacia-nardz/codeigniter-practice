@@ -7,3 +7,7 @@ small {
 .nav li a:hover {
 	color: rgb(29, 29, 193);
 }
+
+.post-thumb {
+	width: 100%;
+}
