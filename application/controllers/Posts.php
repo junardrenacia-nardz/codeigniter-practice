@@ -47,27 +47,28 @@ class Posts extends CI_Controller {
             //Upload Image
             $config['upload_path'] = './assets/images/posts';
             $config['allowed_types'] = 'gif|jpg|png';
-            $config['max_size'] = '2048';
-            $config['max-width'] = '500';
-            $config['max-height'] = '500';
+            $config['encrypt_name']  = TRUE;
 
             $this->load->library('upload', $config);
 
-            if (!$this->upload->do_upload()) {
+            if (!$this->upload->do_upload('userfile')) {
                 $errors = ['error' => $this->upload->display_errors()];
                 $post_image = 'noimage.jpg';
             } else {
-                $data = ['upload_data' => $this->upload->data()];
-                $post_image = $_FILES['userfile']['name'];
+                // $data = ['upload_data' => $this->upload->data()];
+                // $post_image = $_FILES['userfile']['name'];
+                $uploadData = $this->upload->data();
+                $post_image = $uploadData['file_name'];
+                $origName = $uploadData['orig_name'];
             }
 
-            $this->post_model->create_post($post_image);
+            $this->post_model->create_post($post_image, $origName);
             redirect('posts');
         }
     }
 
-    public function delete($id) {
-        $this->post_model->delete_post($id);
+    public function delete($id, $image) {
+        $this->post_model->delete_post($id, $image);
         redirect('posts');
     }
 
@@ -87,8 +88,23 @@ class Posts extends CI_Controller {
     }
 
     public function update() {
+        //Upload Image
+        $config['upload_path'] = './assets/images/posts';
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['encrypt_name']  = TRUE;
 
-        $this->post_model->update_post();
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('userfile')) {
+            $post_image = 'noimage.jpg';
+        } else {
+            // $data = ['upload_data' => $this->upload->data()];
+            // $post_image = $_FILES['userfile']['name'];
+            $uploadData = $this->upload->data();
+            $post_image = $uploadData['file_name'];
+            $origName = $uploadData['orig_name'];
+        }
+        $this->post_model->update_post($post_image, $origName);
         redirect('posts');
     }
 }

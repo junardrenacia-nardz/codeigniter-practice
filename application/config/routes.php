@@ -54,6 +54,8 @@ $route['posts/update'] = 'posts/update';
 $route['posts'] = 'posts/index';
 $route['posts/(:any)'] = 'posts/view/$1'; // Display one post
 
+$route['categories'] = 'categories/index';
+
 
 $route['default_controller'] = 'pages/view';
 $route['(:any)'] = 'pages/view/$1';

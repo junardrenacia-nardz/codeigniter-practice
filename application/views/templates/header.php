@@ -17,17 +17,25 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-primary">
         <div class="container">
-            <div class="navbar-header">
-                <a href="<?= base_url(); ?>posts" class="navbar-brand">ciBlog</a>
+            <div class="d-flex align-items-center">
+                <div class="navbar-header me-5">
+                    <a href="<?= base_url(); ?>posts" class="navbar-brand">
+                        <h2>ciBlog</h2>
+                    </a>
+                </div>
+                <div id="navbar" class="navigation">
+                    <ul class="nav">
+                        <li class="nav-item"><a href="<?= base_url(); ?>">Home</a></li>
+                        <li class="nav-item"><a href="<?= base_url(); ?>about">About</a></li>
+                        <li class="nav-item"><a href="<?= base_url(); ?>posts">Blog</a></li>
+                        <li class="nav-item"><a href="<?= base_url(); ?>categories">Categories</a></li>
+                    </ul>
+                </div>
             </div>
-            <div id="navbar" class="navigation">
-                <ul class="nav">
-                    <li class="nav-item"><a href="<?= base_url(); ?>">Home</a></li>
-                    <li class="nav-item"><a href="<?= base_url(); ?>about">About</a></li>
-                    <li class="nav-item"><a href="<?= base_url(); ?>posts">Blog</a></li>
-                </ul>
-            </div>
+
+
             <ul class="nav" id="navbar">
+                <li class="nav-item"><a href="<?= base_url(); ?>categories/create">Create Categories</a></li>
                 <li class="nav-item"><a href="<?= base_url(); ?>posts/create">Create Post</a></li>
             </ul>
         </div>
