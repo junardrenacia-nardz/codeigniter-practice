@@ -4,7 +4,10 @@ class Post_model extends CI_Model {
         $this->load->database();
     }
 
-    public function get_posts($slug = FALSE) {
+    public function get_posts($slug = FALSE, $limit = FALSE, $offset = FALSE) {
+        if ($limit) {
+            $this->db->limit($limit, $offset);
+        }
         if ($slug === FALSE) {
             $this->db->order_by('posts.id', 'DESC');
             $this->db->select('
@@ -16,6 +19,9 @@ class Post_model extends CI_Model {
             posts.body, posts.created_at, posts.slug, posts.title, categories.name AS category_name');
             $this->db->from('posts');
             $this->db->join('categories', 'categories.id = posts.category_id', 'left');
+            $this->db->where([
+                'user_id' => $this->session->userdata('user_id'),
+            ]);
             $query = $this->db->get();
             return $query->result_array();
         }
@@ -47,7 +53,8 @@ class Post_model extends CI_Model {
             "body" => $this->input->post('body'),
             "category_id" => $this->input->post('category'),
             'post_image' => $post_image,
-            'image_orig_name' => $origName
+            'image_orig_name' => $origName,
+            'user_id' => $this->session->userdata('user_id')
         ];
 
         return $this->db->insert('posts', $data);
@@ -88,7 +95,8 @@ class Post_model extends CI_Model {
             "body" => $this->input->post('body'),
             "category_id" => $this->input->post('category'),
             "post_image" => $image,
-            'image_orig_name' => $origName
+            'image_orig_name' => $origName,
+            'user_id' => $this->session->userdata('user_id')
         ];
 
         $this->db->where('id', $this->input->post('id'));
